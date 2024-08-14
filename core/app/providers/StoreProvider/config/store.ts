@@ -1,0 +1,41 @@
+import {
+	Action,
+	combineSlices, configureStore,
+	ThunkAction,
+} from "@reduxjs/toolkit";
+import { entityUserSlice } from "@core/entities/User";
+import { $api } from "@core/shared/api/api";
+import { rtkApi } from "@core/shared/api/rtkApi";
+import { ExtraArgumentType } from "./types";
+
+const rootReducer = combineSlices(
+	{
+		[rtkApi.reducerPath]: rtkApi.reducer,
+	},
+	entityUserSlice,
+);
+
+export const createReduxStore = () => {
+	const extraArgument: ExtraArgumentType = {
+		api: $api,
+	};
+
+	const store = configureStore({
+		reducer: rootReducer,
+		devTools: true,
+		middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+			thunk: { extraArgument },
+		}).concat(rtkApi.middleware),
+	});
+
+	return store;
+};
+export type AppStore = ReturnType<typeof createReduxStore>;
+export type AppDispatch = AppStore["dispatch"];
+export type RootState = AppStore["getState"];
+export type AppThunk<ThunkReturnType = void> = ThunkAction<
+ThunkReturnType,
+RootState,
+unknown,
+Action
+>;

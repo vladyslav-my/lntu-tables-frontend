@@ -1,0 +1,42 @@
+.Input {
+   position: relative;
+
+   width: 100%;
+
+   &_withValidation {
+      padding-bottom: rem(21);
+   }
+
+   &__this {
+      min-width: 100%;
+      padding: rem(10);
+
+      color: $whiteColor;
+
+      border-radius: rem(12);
+      background: $secondaryColor;
+
+      font-size: rem(20);
+      &::placeholder {
+         color: #666680;
+      }
+
+      @media (max-width: em($tablet)) {
+         font-size: rem(16);
+      }
+   }
+
+   &__validation {
+      position: absolute;
+      bottom: 0;
+      left: rem(4);
+
+      color: $redColor;
+
+      font-size: rem(16);
+      
+      @media (min-width: em($tablet)) {
+         font-size: rem(14);
+      }
+   }
+}

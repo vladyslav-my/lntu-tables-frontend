@@ -1,0 +1,10 @@
+.LoginPage {
+   $p: &;
+   
+   &__container {
+      display: grid;
+      align-items: center;
+
+      height: 100vh;
+   }
+}
