@@ -2,7 +2,6 @@ import "@core/shared/scss/layout/index.scss";
 
 import { Metadata } from "next";
 import { StoreProvider } from "@core/app/providers/StoreProvider";
-import { Sidebar } from "@core/widgets/Sidebar";
 
 export const metadata: Metadata = {
 	title: "LNTU tables",
@@ -18,7 +17,6 @@ export default function RootLayout({
 		<StoreProvider>
 			<html lang="en">
 				<body>
-					<Sidebar />
 					<main>{children}</main>
 				</body>
 			</html>

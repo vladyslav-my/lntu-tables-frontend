@@ -2,8 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { $api } from "@core/shared/api/api";
 
-const CALLBACK_ROUTE = "/";
-const PROTECTED_ROUTES = ["/dashboard", "/profile"];
+const CALLBACK_ROUTE = "/app";
+const PROTECTED_ROUTES = ["/app", "/app/profile"];
 const AUTH_ROUTES = {
 	login: "/login",
 	register: "/register",
@@ -17,11 +17,11 @@ export async function middleware(req: NextRequest) {
 
 	const { pathname } = req.nextUrl;
 
-	if (isValidToken && (pathname.startsWith(AUTH_ROUTES.login) || pathname.startsWith(AUTH_ROUTES.register))) {
+	if (isValidToken && (pathname.includes(AUTH_ROUTES.login) || pathname.includes(AUTH_ROUTES.register))) {
 		return NextResponse.redirect(new URL(CALLBACK_ROUTE, req.url));
 	}
 
-	if (!isValidToken && PROTECTED_ROUTES.some((route) => pathname.startsWith(route))) {
+	if (!isValidToken && PROTECTED_ROUTES.includes(pathname)) {
 		return NextResponse.redirect(new URL(AUTH_ROUTES.login, req.url));
 	}
 

@@ -30,7 +30,7 @@ export const LoginAuthForm: FC<LoginAuthFormProps> = memo(({ className }) => {
 
 	const onSubmit: SubmitHandler<RegisterBody> = useCallback((data) => {
 		login(data).then(() => {
-			router.push("/profile");
+			router.push("/app/profile");
 		});
 	}, [login, router]);
 

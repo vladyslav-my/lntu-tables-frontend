@@ -25,7 +25,7 @@ export const TimePicker: FC<TimePickerProps> = ({ className, bookedSlots }) => {
 
 	const onChangeTime = useCallback((e: any) => {
 		if (rangeRef.current) {
-			rangeRef.current.value = secondsBetweenTimes("8:00", e.target.value);
+			rangeRef.current.value = `${secondsBetweenTimes("8:00", e.target.value)}`;
 		}
 	}, []);
 

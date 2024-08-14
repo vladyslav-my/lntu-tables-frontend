@@ -11,7 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	withValidation?: boolean;
 }
 
-export const Input: FC<InputProps> = forwardRef(({
+export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(({
 	className, error, withValidation, ...otherProps
 }, ref) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks

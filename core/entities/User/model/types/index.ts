@@ -1,13 +1,3 @@
-export interface EntityUserSchema {
-	data?: ResponseData;
-	isLoading: boolean;
-	error?: string;
-}
-
-export interface ResponseData {
-	data: any;
-}
-
 export interface UserToken {
 	token: string;
 }

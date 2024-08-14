@@ -2,7 +2,6 @@
 
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import { FC, memo, useCallback } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -29,7 +28,7 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 	const onSubmit: SubmitHandler<RegisterBody> = useCallback((data) => {
 		register(data)
 			.then(() => {
-				router.push("/profile");
+				router.push("/app/profile");
 			})
 			.catch((e) => {
 				// console.log(e);

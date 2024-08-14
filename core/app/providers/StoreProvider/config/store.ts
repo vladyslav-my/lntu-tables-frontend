@@ -3,7 +3,6 @@ import {
 	combineSlices, configureStore,
 	ThunkAction,
 } from "@reduxjs/toolkit";
-import { entityUserSlice } from "@core/entities/User";
 import { $api } from "@core/shared/api/api";
 import { rtkApi } from "@core/shared/api/rtkApi";
 import { ExtraArgumentType } from "./types";
@@ -12,7 +11,6 @@ const rootReducer = combineSlices(
 	{
 		[rtkApi.reducerPath]: rtkApi.reducer,
 	},
-	entityUserSlice,
 );
 
 export const createReduxStore = () => {
