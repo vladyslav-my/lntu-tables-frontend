@@ -10,8 +10,8 @@ $purpleColor200: #9a9ac9;
 
 $loaderColor: $purpleColor300;
 
-$primaryTransition: 0.3s ease;
-$secondaryTransition: 0.2s ease;
+$transitionEase300: 0.3s ease;
+$transitionEase200: 0.2s ease;
 
 //** Fonts by default:
 $fontFamily: "Rubik"; //? name
@@ -20,7 +20,7 @@ $fontColor: #000; //? color
 
 $minWidth: 320; //? min width of layout
 $containerPadding: 30; //? padding for container
-$maxWidthContainer: 1252; //? width container
+$maxWidthContainer: 1400; //? width container
 $authWidthContainer: 660; //? width container
 
 

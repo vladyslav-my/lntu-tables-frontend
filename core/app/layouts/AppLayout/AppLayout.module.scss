@@ -1,7 +1,94 @@
 .AppLayout {
+   position: relative;
+
+   height: calc(100vh - var(--container-padding) * 2);
+   
+   &__app {
+      display: flex;
+      overflow: hidden;
+
+      height: 100%;
+
+      border-radius: rem(46);
+      box-shadow: rem(12) rem(11) rem(43.2) 0 rgba(0, 0, 0, 0.25);
+   }
    
    &__sidebar {
+      flex: 0 0 rem(360);
+
+      background: $purpleColor500;
    }
    &__main {
+      overflow-y: scroll;
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      flex: 1 1 auto;
+
+      padding: rem(26);
+
+      &::-webkit-scrollbar {
+         width: 0;
+         height: 0;
+     }
+   }
+}
+
+.Scrollbar {
+   position: absolute;
+   top: 50%;
+   right: 0;
+
+   width: rem(12);
+   height: 50%;
+
+   cursor: pointer;
+   user-select: none;
+   transition: opacity $transitionEase300;
+   transform: translateY(-50%);
+
+   opacity: 0;
+
+   &_visible {
+      opacity: 1;
+   }
+
+   &:before {
+      position: absolute;
+      top: 0;
+      left: 50%;
+
+      display: block;
+
+      width: rem(3);
+      height: 100%;
+
+      content: "";
+      transform: translateX(-50%);
+
+      border-radius: rem(3);
+
+      background: $purpleColor300;
+   }
+
+   &__this {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: rem(50); // js - scrollHeight - clientHeight
+
+      border-radius: rem(5);
+
+      background: $purpleColor500;
+
+      &:hover {
+         cursor: pointer;
+
+         background: $purpleColor300;
+      }
    }
 }

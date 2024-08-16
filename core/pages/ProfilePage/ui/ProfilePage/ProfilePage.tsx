@@ -1,3 +1,5 @@
+"use server";
+
 import clsx from "clsx";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

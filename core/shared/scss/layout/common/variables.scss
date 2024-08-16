@@ -1,0 +1,7 @@
+:root {
+   --container-padding: #{rem($containerPadding)};
+
+   @media (max-width: em($mobile)) {
+      --container-padding: #{rem(math.div($containerPadding, 2))};
+   }
+}

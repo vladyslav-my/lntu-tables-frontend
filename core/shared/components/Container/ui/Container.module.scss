@@ -1,21 +1,24 @@
 .Container {
-	&_active {
+   transition: padding $transitionEase300;
+
+	&_default {
       box-sizing: content-box;
       max-width: rem($maxWidthContainer);
       margin: 0 auto;
-      padding: 0 rem($containerPadding);
+      padding: 0 var(--container-padding);
+   }
+
+   &_app {
+      box-sizing: content-box;
+      max-width: rem($maxWidthContainer);
+      margin: 0 auto;
+      padding: var(--container-padding);
    }
 
    &_auth {
       box-sizing: content-box;
       max-width: rem($authWidthContainer);
       margin: 0 auto;
-      padding: 0 rem($containerPadding);
-   }
-
-   &_active, &_auth {
-      @media (max-width: em($mobile)) {
-         padding: 0 rem(15);
-      }
+      padding: 0 var(--container-padding);
    }
 }

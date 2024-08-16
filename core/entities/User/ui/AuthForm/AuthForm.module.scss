@@ -63,7 +63,7 @@
       color: $redColor;
 
       &_enter {
-         transition: opacity $primaryTransition;
+         transition: opacity $transitionEase300;
       }
 
       &_enterFrom {
@@ -75,7 +75,7 @@
       }
 
       &_leave {
-         transition: opacity $primaryTransition;
+         transition: opacity $transitionEase300;
       }
 
       &_leaveFrom {

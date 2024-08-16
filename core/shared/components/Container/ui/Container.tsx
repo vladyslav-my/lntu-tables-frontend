@@ -10,13 +10,13 @@ interface ContainerProps {
 }
 
 export enum ContainerModifier {
+	DEFAULT = "Container_default",
 	AUTH = "Container_auth",
-	FORM = "Container_form",
-	ACTIVE = "Container_active",
+	APP = "Container_app",
 }
 
 export const Container: FC<ContainerProps> = memo(({
-	className, children, isDisabled, modifier = ContainerModifier.ACTIVE,
+	className, children, isDisabled, modifier = ContainerModifier.DEFAULT,
 }) => {
 	return (
 		<div className={clsx(cls.Container, [className, !isDisabled ? cls[modifier] : undefined])}>
