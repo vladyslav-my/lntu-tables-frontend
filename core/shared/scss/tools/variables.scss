@@ -13,10 +13,17 @@ $loaderColor: $purpleColor300;
 $transitionEase300: 0.3s ease;
 $transitionEase200: 0.2s ease;
 
+$zIndexOverlay: 400;
+$zIndexDrawer: 500;
+$zIndexButtons: 600;
+$zIndexModal: 700;
+$zIndexSelect: 800;
+$zIndexCalendar: 800;
+
 //** Fonts by default:
 $fontFamily: "Rubik"; //? name
 $fontSize: 16; //? size
-$fontColor: #000; //? color
+$fontColor: $purpleColor500; //? color
 
 $minWidth: 320; //? min width of layout
 $containerPadding: 30; //? padding for container

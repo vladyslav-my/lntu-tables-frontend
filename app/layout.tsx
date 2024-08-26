@@ -1,7 +1,10 @@
+import "@mantine/core/styles.layer.css";
+import "@mantine/dates/styles.layer.css";
 import "@core/shared/scss/layout/index.scss";
 
+import { ColorSchemeScript } from "@mantine/core";
 import { Metadata } from "next";
-import { StoreProvider } from "@core/app/providers/StoreProvider";
+import { Providers } from "@core/app/providers/StoreProvider";
 
 export const metadata: Metadata = {
 	title: "LNTU tables",
@@ -14,13 +17,16 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<StoreProvider>
-			<html lang="en">
-				<body>
+		<html lang="en">
+			<head>
+				<ColorSchemeScript />
+			</head>
+			<body>
+				<Providers>
 					{children}
-				</body>
-			</html>
-		</StoreProvider>
+				</Providers>
+			</body>
+		</html>
 
 	);
 }

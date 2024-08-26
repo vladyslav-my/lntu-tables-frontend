@@ -1,0 +1,67 @@
+.Modal {
+	position: fixed;
+
+	z-index: $zIndexModal;
+	top: 50%;
+	left: 50%;
+
+	max-width: rem(600);
+	margin: rem(10);
+	padding: rem(30) rem(35);
+	padding-top: rem(60);
+	padding-bottom: rem(90);
+
+	transition: all 0.5s ease;
+	transform: translate(-50%, -50%);
+
+	border-radius: rem(20);
+	background-color: $whiteColor;
+	box-shadow: 0 rem(4) rem(30) 0 rgba(0, 0, 0, 0.1);
+
+	&__closeButton {
+      position: absolute;
+		top: rem(20);
+		right: rem(20);
+   }
+}
+
+.CloseButton {
+   $p: &;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   width: em(50);
+   height: em(50);
+
+   transition: background-color $transitionEase300, color $transitionEase300;
+
+   border: em(2) solid $purpleColor300;
+   border-radius: 50%;
+
+
+	font-size: rem(13);
+
+   &:hover {
+      background-color: $purpleColor300;
+
+      #{$p} {
+         &__icon {
+            fill: $whiteColor;
+         }
+      }
+   }
+
+   &__icon {
+      fill: $purpleColor300;
+
+      width: em(20);
+      height: em(20);
+   }
+}
+
+
+.overflowHidden {
+	overflow: hidden;
+}

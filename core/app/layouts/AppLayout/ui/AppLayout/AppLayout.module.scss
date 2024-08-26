@@ -1,0 +1,73 @@
+.AppLayout {
+   position: relative;
+   
+   &__app {
+      display: grid;
+
+      overflow: hidden;
+
+      height: 100%;
+
+      
+      
+      @media (max-width: em($tablet)) {
+         grid-template-rows: 1fr;
+         grid-template-areas:
+         "header"
+         "main";
+      }
+
+      @media (min-width: em($tablet)) {
+         grid-template-columns: rem(300) 1fr;
+         grid-template-rows: auto minmax(0, 1fr);
+
+         grid-template-areas:
+         "sidebar header"
+         "sidebar main";
+      }
+
+      @media (min-width: em($tablet)) {
+         border-radius: rem(46);
+         box-shadow: rem(12) rem(11) rem(43.2) 0 rgba(0, 0, 0, 0.25);
+      }
+   }
+   
+   &__sidebar {
+      grid-area: sidebar;
+
+      background: $purpleColor500;
+   }
+
+   &__header {
+      grid-area: header;
+
+      padding: rem(26);
+   }
+
+   &__main {
+      overflow: hidden;
+
+      padding: rem(26);
+      padding-top: 0;
+
+      grid-area: main;
+   }
+
+   
+
+   @media (min-width: em($tablet)) {
+      height: calc(100vh - var(--container-padding) * 2);
+   }
+}
+
+
+.Header {
+   display: flex;
+   align-items: center;
+   justify-content: end;
+   gap: rem(10);
+
+   &__toggleDrawerButton, &__userDropDown {
+      z-index: $zIndexButtons;
+   }
+}

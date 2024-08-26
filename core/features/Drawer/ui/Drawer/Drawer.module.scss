@@ -1,0 +1,21 @@
+.Drawer {
+   $p: &;
+   position: fixed;
+   z-index: $zIndexDrawer;
+   top: 0;
+
+   
+   height: 100%;
+
+   padding: rem(26);
+
+   background-color: $purpleColor500;
+
+   @media (max-width: em($smallMobile)) {
+      width: 100%;
+   }
+
+   @media (min-width: em($smallMobile)) {
+      width: min(100%, rem(320));
+   }
+}

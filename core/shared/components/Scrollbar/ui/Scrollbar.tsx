@@ -2,37 +2,25 @@
 
 import clsx from "clsx";
 import {
-	FC,
-	ReactNode,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
+	FC, useCallback, useEffect, useRef, useState,
 } from "react";
-import { Sidebar } from "@core/widgets/Sidebar";
-import {
-	Container,
-	ContainerModifier,
-} from "@core/shared/components/Container";
-import cls from "./AppLayout.module.scss";
+import cls from "./Scrollbar.module.scss";
 
-interface AppLayoutProps {
-	children: ReactNode;
+interface ScrollbarProps {
+	scrollableRef: React.RefObject<HTMLDivElement>;
 }
 
-export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
-	const scrollableElementRef = useRef<HTMLDivElement>(null);
+export const Scrollbar: FC<ScrollbarProps> = ({ scrollableRef }) => {
 	const scrollbarRef = useRef<HTMLDivElement>(null);
-
 	const [isDrag, setIsDrag] = useState(false);
 	const [startY, setStartY] = useState(0);
 	const [currentY, setCurrentY] = useState(0);
 	const [scrollBarHeight, setScrollBarHeight] = useState(0);
 	const [showScrollbar, setShowScrollbar] = useState(false);
 
-	// Function to update the scrollbar's height and visibility
 	const updateScrollbar = useCallback(() => {
-		const scrollableElement = scrollableElementRef.current;
+		console.log(scrollableRef.current, "render");
+		const scrollableElement = scrollableRef.current;
 		const scrollbarContainer = scrollbarRef.current;
 
 		if (scrollableElement && scrollbarContainer) {
@@ -44,20 +32,13 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 			setScrollBarHeight(barHeight);
 
 			const shouldShowScrollbar = contentHeight < totalHeight;
+			console.log("contentHeight", contentHeight, "totalHeight", totalHeight);
 			setShowScrollbar(shouldShowScrollbar);
-
-			// Logging for debugging
-			console.log("Content Height:", contentHeight);
-			console.log("Total Height:", totalHeight);
-			console.log("Container Height:", containerHeight);
-			console.log("Scroll Bar Height:", barHeight);
-			console.log("Show Scrollbar:", shouldShowScrollbar);
 		}
-	}, []);
+	}, [scrollableRef, scrollbarRef]);
 
-	// Function to handle the scrolling of the content and update the scrollbar's position
 	const onScroll = useCallback(() => {
-		const scrollableElement = scrollableElementRef.current;
+		const scrollableElement = scrollableRef.current;
 		const scrollbarContainer = scrollbarRef.current;
 
 		if (scrollableElement && scrollbarContainer) {
@@ -70,17 +51,9 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 			const newY = percentage * maxScrollbarTop;
 
 			setCurrentY(newY);
-
-			// Logging for debugging
-			console.log("ScrollTop:", scrollTop);
-			console.log("Max ScrollTop:", maxScrollTop);
-			console.log("Percentage:", percentage);
-			console.log("Max Scrollbar Top:", maxScrollbarTop);
-			console.log("New Y Position:", newY);
 		}
-	}, [scrollBarHeight]);
+	}, [scrollableRef, scrollbarRef, scrollBarHeight]);
 
-	// Touch Events
 	const onTouchStart = useCallback((event: TouchEvent) => {
 		setIsDrag(true);
 		setStartY(event.touches[0].clientY);
@@ -89,7 +62,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 	const onTouchMove = useCallback((event: TouchEvent) => {
 		if (!isDrag) return;
 
-		const scrollableElement = scrollableElementRef.current;
+		const scrollableElement = scrollableRef.current;
 		const scrollbarContainer = scrollbarRef.current;
 
 		if (scrollableElement && scrollbarContainer) {
@@ -104,13 +77,12 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 			scrollableElement.scrollTop = newScrollTop;
 			setStartY(event.touches[0].clientY);
 		}
-	}, [isDrag, startY, currentY, scrollBarHeight]);
+	}, [isDrag, startY, currentY, scrollBarHeight, scrollableRef]);
 
 	const onTouchEnd = useCallback(() => {
 		setIsDrag(false);
 	}, []);
 
-	// Mouse Events
 	const onMouseDown = useCallback((event: React.MouseEvent) => {
 		setIsDrag(true);
 		setStartY(event.clientY);
@@ -119,7 +91,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 	const onMouseMove = useCallback((event: MouseEvent) => {
 		if (!isDrag) return;
 
-		const scrollableElement = scrollableElementRef.current;
+		const scrollableElement = scrollableRef.current;
 		const scrollbarContainer = scrollbarRef.current;
 
 		if (scrollableElement && scrollbarContainer) {
@@ -134,13 +106,12 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 			scrollableElement.scrollTop = newScrollTop;
 			setStartY(event.clientY);
 		}
-	}, [isDrag, startY, currentY, scrollBarHeight]);
+	}, [isDrag, startY, currentY, scrollBarHeight, scrollableRef, scrollbarRef]);
 
 	const onMouseUp = useCallback(() => {
 		setIsDrag(false);
 	}, []);
 
-	// Attach global mousemove and mouseup events when dragging
 	useEffect(() => {
 		if (isDrag) {
 			window.addEventListener("mousemove", onMouseMove);
@@ -150,18 +121,16 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 			window.removeEventListener("mouseup", onMouseUp);
 		}
 
-		// Cleanup on unmount
 		return () => {
 			window.removeEventListener("mousemove", onMouseMove);
 			window.removeEventListener("mouseup", onMouseUp);
 		};
 	}, [isDrag, onMouseMove, onMouseUp]);
 
-	// Update the scrollbar on initial render and whenever the content changes
 	useEffect(() => {
 		updateScrollbar();
 
-		const scrollableElement = scrollableElementRef.current;
+		const scrollableElement = scrollableRef.current;
 		if (scrollableElement) {
 			scrollableElement.addEventListener("scroll", onScroll);
 		}
@@ -171,83 +140,35 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 				scrollableElement.removeEventListener("scroll", onScroll);
 			}
 		};
-	}, [updateScrollbar, onScroll]);
+	}, [updateScrollbar, onScroll, scrollableRef, scrollbarRef]);
 
-	// Update the scrollbar when the window resizes
 	useEffect(() => {
 		window.addEventListener("resize", updateScrollbar);
 
 		return () => {
 			window.removeEventListener("resize", updateScrollbar);
 		};
-	}, [updateScrollbar]);
+	}, [scrollableRef, updateScrollbar]);
 
 	return (
-		<Container className={cls.AppLayout} modifier={ContainerModifier.APP}>
-			<div className={cls.AppLayout__app}>
-				<Sidebar className={cls.AppLayout__sidebar} />
-				<main className={cls.AppLayout__main} ref={scrollableElementRef}>
-					{children}
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-				</main>
-			</div>
+		<div
+			className={clsx(
+				cls.Scrollbar,
+				{ [cls.Scrollbar_visible]: showScrollbar },
+			)}
+			ref={scrollbarRef}
+		>
 			<div
-				className={clsx(
-					cls.Scrollbar,
-					{ [cls.Scrollbar_visible]: showScrollbar },
-				)}
-				ref={scrollbarRef}
-			>
-				<div
-					className={cls.Scrollbar__this}
-					onTouchStart={onTouchStart as any}
-					onTouchMove={onTouchMove as any}
-					onTouchEnd={onTouchEnd as any}
-					onMouseDown={onMouseDown}
-					style={{
-						transform: `translateY(${currentY}px)`,
-						height: `${scrollBarHeight}px`,
-					}}
-				/>
-			</div>
-		</Container>
+				className={cls.Scrollbar__this}
+				onTouchStart={onTouchStart as any}
+				onTouchMove={onTouchMove as any}
+				onTouchEnd={onTouchEnd as any}
+				onMouseDown={onMouseDown}
+				style={{
+					transform: `translateY(${currentY}px)`,
+					height: `${scrollBarHeight}px`,
+				}}
+			/>
+		</div>
 	);
 };

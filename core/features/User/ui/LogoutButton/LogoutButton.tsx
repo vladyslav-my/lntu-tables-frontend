@@ -2,16 +2,17 @@
 
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { FC, memo, useCallback } from "react";
-import { userApi } from "@core/entities/User";
-import { Button } from "@core/shared/components/Button";
+import {
+	ComponentProps, FC, memo, useCallback,
+} from "react";
+import { userApi, UserDropDownButtonItem } from "@core/entities/User";
 import cls from "./LogoutButton.module.scss";
 
-interface LogoutButtonProps {
-	className?: string
+interface LogoutButtonProps extends ComponentProps<typeof UserDropDownButtonItem> {
+	className?: string;
 }
 
-export const LogoutButton: FC<LogoutButtonProps> = memo(({ className }) => {
+export const LogoutButton: FC<LogoutButtonProps> = memo(({ className, ...otherProps }) => {
 	const [logout, { isLoading, error }] = userApi.useLogoutMutation();
 	const router = useRouter();
 
@@ -22,12 +23,13 @@ export const LogoutButton: FC<LogoutButtonProps> = memo(({ className }) => {
 	}, [logout, router]);
 
 	return (
-		<Button
-			isLoading={isLoading}
+		<UserDropDownButtonItem
+			// isLoading={isLoading}
 			onClick={onClick}
 			className={clsx(cls.LogoutButton, {}, [className])}
+			{...otherProps}
 		>
 			Logout
-		</Button>
+		</UserDropDownButtonItem>
 	);
 });

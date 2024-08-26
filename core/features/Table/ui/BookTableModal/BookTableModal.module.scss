@@ -1,0 +1,23 @@
+.BookTableModal {
+   &__title {
+      font-size: rem(24);
+   }  
+
+   &__tableNumber {
+      
+   }
+}
+
+.Select {
+   &__dropdown {
+      // position: relative;
+      z-index: 10000000000000000;
+   }
+}
+
+.DateInput {
+   z-index: 100000;
+   &__calendarHeader {
+      z-index: 10000000000000000;
+   }
+}

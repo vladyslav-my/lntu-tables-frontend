@@ -1,0 +1,34 @@
+.TableItem {
+   $p: &;
+
+   box-sizing: border-box;
+
+   padding: rem(50);
+   padding-top: rem(80);
+   padding-bottom: rem(38);
+
+   border: rem(1) solid rgba(63, 64, 155, 0.57);
+   border-radius: percent(46, 280);
+   background: rgb(255, 255, 255);
+
+   &__icon {
+      margin-bottom: rem(16);
+   }  
+   
+   &__title {
+      margin-bottom: rem(20);
+
+      text-align: center;
+
+      border-bottom: rem(1) solid $purpleColor300;
+
+      font-size: rem(17);
+      font-weight: 500;
+      line-height: rem(31);
+
+   }
+
+   &__button {
+      
+   }
+}

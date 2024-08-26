@@ -8,15 +8,17 @@ import cls from "../common/style.module.scss";
 interface LinkButtonProps extends ComponentProps<typeof Link> {
 	className?: string;
 	children: ReactNode;
+	wide?: boolean;
 }
 
 export const LinkButton: FC<LinkButtonProps> = memo(({
 	className,
 	children,
+	wide,
 	...otherProps
 }) => {
 	return (
-		<Link className={clsx(cls.Button, [className])} {...otherProps}>
+		<Link className={clsx(cls.Button, { [cls.Button_wide]: wide }, [className])} {...otherProps}>
 			{children}
 		</Link>
 	);

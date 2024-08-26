@@ -1,0 +1,30 @@
+.ToggleDrawerButton {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   width: rem(36);
+   height: rem(36);
+
+   transition: opacity $transitionEase300, transform $transitionEase300;
+   transform: rotate(180deg);
+
+   border-radius: 50%;
+   background-color: $purpleColor200;
+
+   &_open {
+      transform: rotate(0);
+   }
+
+   &:hover {
+      opacity: 0.7;
+   }
+
+
+   &__icon {
+      fill: $whiteColor;
+
+      width: rem(10);
+      height: rem(18);
+   }
+}

@@ -1,3 +1,5 @@
+import { ActionIcon } from "@mantine/core";
+import { TimeInput } from "@mantine/dates";
 import clsx from "clsx";
 import {
 	FC, useCallback, useEffect, useRef,
@@ -64,7 +66,7 @@ export const TimePicker: FC<TimePickerProps> = ({ className, bookedSlots }) => {
 					</div>
 				</div>
 			</div>
-			<input
+			<TimeInput
 				className={cls.TimePicker__inputTime}
 				ref={timeRef}
 				onChange={onChangeTime}

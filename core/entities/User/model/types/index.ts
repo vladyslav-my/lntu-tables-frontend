@@ -15,3 +15,8 @@ export interface RegisterBody {
 	password: string;
 	password_confirmation: string;
 }
+
+export interface User {
+	id: number;
+	full_name: string;
+}

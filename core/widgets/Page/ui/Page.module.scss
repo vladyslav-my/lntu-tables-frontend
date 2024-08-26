@@ -1,0 +1,80 @@
+.Page {
+   display: flex;
+   flex-direction: column;   
+
+   height: 100%;
+
+   &__title {
+      text-align: center;
+
+      font-size: rem(32);
+      font-weight: 500;
+   }
+
+   &__fixedContent {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+
+      margin-bottom: em(4);
+   }
+   
+   &__content {
+      position: relative;
+
+      overflow: auto;
+
+      flex: 1 1 auto;
+
+      margin-bottom: rem(4);
+
+      padding: rem(20) 0;
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+         width: 0;
+         height: 0;
+      }
+
+    
+      &::before {
+         position: sticky;
+         z-index: 1;
+         top: rem(-20);
+         right: 0;
+         left: 0;
+
+         display: block;
+
+         height: rem(20);
+
+         content: "";
+         pointer-events: none;
+
+         background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+      }
+
+      &::after {
+         position: sticky;
+         z-index: 1;
+         right: 0;
+         bottom: rem(-20);
+         left: 0;
+
+         display: block;
+
+         height: rem(20);
+
+         content: "";
+         pointer-events: none;
+
+         background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+      }
+   }
+}
+
+.Height {
+   height: 1000px;
+}

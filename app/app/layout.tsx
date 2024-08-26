@@ -1,5 +1,4 @@
-import { AppLayout } from "@core/app/layouts/AppLayout/AppLayout";
-import { Sidebar } from "@core/widgets/Sidebar";
+import { AppLayout } from "@core/app/layouts/AppLayout";
 
 export default function Layout({
 	children,

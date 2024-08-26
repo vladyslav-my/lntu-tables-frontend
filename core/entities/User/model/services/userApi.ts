@@ -2,7 +2,9 @@ import { destroyCookie } from "nookies";
 import { rtkApi } from "@core/shared/api/rtkApi";
 import { SANCTUM_TOKEN } from "@core/shared/const";
 import { setTokenCookie } from "../helpers/setTokenCookie";
-import { LoginBody, RegisterBody, UserToken } from "../types";
+import {
+	LoginBody, RegisterBody, User, UserToken,
+} from "../types";
 
 export const userApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -47,6 +49,16 @@ export const userApi = rtkApi.injectEndpoints({
 			transformResponse: (response: UserToken) => {
 				destroyCookie(null, SANCTUM_TOKEN);
 			},
+		}),
+
+		getUsers: build.query({
+			query: ({ search }: { search?: string }) => ({
+				url: "api/users",
+				method: "GET",
+				params: {
+					search,
+				},
+			}),
 		}),
 	}),
 	overrideExisting: false,
