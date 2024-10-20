@@ -11,11 +11,11 @@
 
    background-color: $purpleColor500;
 
-   @media (max-width: em($smallMobile)) {
+   @media (max-width: $breakpoint-xs) {
       width: 100%;
    }
 
-   @media (min-width: em($smallMobile)) {
+   @media (min-width: $breakpoint-xs) {
       width: min(100%, rem(320));
    }
 }

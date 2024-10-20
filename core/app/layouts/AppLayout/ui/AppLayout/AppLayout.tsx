@@ -7,6 +7,7 @@ import {
 import { useMediaQuery } from "react-responsive";
 import { Sidebar } from "@core/widgets/Sidebar";
 import { ToggleDrawerButton } from "@core/features/Drawer";
+import { ThemeSwitcher } from "@core/features/ThemeSwitcher";
 import { UserDropDown } from "@core/features/User";
 import { Container, ContainerModifier } from "@core/shared/components/Container";
 import { Scrollbar } from "@core/shared/components/Scrollbar";
@@ -37,6 +38,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 			<div className={cls.AppLayout__app}>
 				<Sidebar className={cls.AppLayout__sidebar} />
 				<header className={clsx(cls.Header, cls.AppLayout__header)}>
+					<ThemeSwitcher />
 					{isTablet && <ToggleDrawerButton className={cls.Header__toggleDrawerButton} />}
 					<UserDropDown className={cls.Header__userDropDown} />
 				</header>

@@ -2,11 +2,11 @@
 
 import clsx from "clsx";
 import {
-	FC, ReactNode, forwardRef, memo,
+	FC, HTMLAttributes, ReactNode, forwardRef, memo,
 } from "react";
 import cls from "./Page.module.scss";
 
-interface PageProps {
+interface PageProps extends HTMLAttributes<HTMLDivElement> {
 	className?: string;
 	title?: string;
 	children: ReactNode;
@@ -14,10 +14,10 @@ interface PageProps {
 }
 
 export const Page: FC<PageProps> = memo(({
-	className, title, fixedContent, children,
+	className, title, fixedContent, children, ...otherProps
 }) => {
 	return (
-		<div className={clsx(cls.Page, {}, [className])}>
+		<div className={clsx(cls.Page, {}, [className])} {...otherProps}>
 			<div className={cls.Page__fixedContent}>
 				{title && (
 					<h1 className={cls.Page__title}>

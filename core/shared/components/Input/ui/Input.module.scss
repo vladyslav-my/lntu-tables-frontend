@@ -21,7 +21,7 @@
          color: #666680;
       }
 
-      @media (max-width: em($tablet)) {
+      @media (max-width: $breakpoint-md) {
          font-size: rem(16);
       }
    }
@@ -35,7 +35,7 @@
 
       font-size: rem(16);
       
-      @media (min-width: em($tablet)) {
+      @media (min-width: $breakpoint-md) {
          font-size: rem(14);
       }
    }

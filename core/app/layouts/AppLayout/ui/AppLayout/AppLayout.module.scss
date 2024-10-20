@@ -1,5 +1,7 @@
 .AppLayout {
    position: relative;
+
+   height: 100%;
    
    &__app {
       display: grid;
@@ -7,17 +9,15 @@
       overflow: hidden;
 
       height: 100%;
-
       
-      
-      @media (max-width: em($tablet)) {
-         grid-template-rows: 1fr;
+      @media (max-width: $breakpoint-md) {
+         grid-template-rows: auto 1fr;
          grid-template-areas:
          "header"
          "main";
       }
 
-      @media (min-width: em($tablet)) {
+      @media (min-width: $breakpoint-md) {
          grid-template-columns: rem(300) 1fr;
          grid-template-rows: auto minmax(0, 1fr);
 
@@ -26,7 +26,7 @@
          "sidebar main";
       }
 
-      @media (min-width: em($tablet)) {
+      @media (min-width: $breakpoint-md) {
          border-radius: rem(46);
          box-shadow: rem(12) rem(11) rem(43.2) 0 rgba(0, 0, 0, 0.25);
       }
@@ -55,7 +55,7 @@
 
    
 
-   @media (min-width: em($tablet)) {
+   @media (min-width: $breakpoint-md) {
       height: calc(100vh - var(--container-padding) * 2);
    }
 }

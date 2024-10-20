@@ -3,13 +3,13 @@ import { rtkApi } from "@core/shared/api/rtkApi";
 import { SANCTUM_TOKEN } from "@core/shared/const";
 import { setTokenCookie } from "../helpers/setTokenCookie";
 import {
-	LoginBody, RegisterBody, User, UserToken,
+	ILoginBody, IRegisterBody, IUser, UserToken,
 } from "../types";
 
 export const userApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		login: build.mutation({
-			query: (body: LoginBody) => ({
+			query: (body: ILoginBody) => ({
 				url: "api/auth/login",
 				method: "POST",
 				headers: {
@@ -27,7 +27,7 @@ export const userApi = rtkApi.injectEndpoints({
 		}),
 
 		register: build.mutation({
-			query: (body: RegisterBody) => ({
+			query: (body: IRegisterBody) => ({
 				url: "api/auth/register",
 				method: "POST",
 				data: body,
@@ -51,8 +51,8 @@ export const userApi = rtkApi.injectEndpoints({
 			},
 		}),
 
-		getUsers: build.query({
-			query: ({ search }: { search?: string }) => ({
+		getUsers: build.query<IUser[], { search?: string }>({
+			query: ({ search }) => ({
 				url: "api/users",
 				method: "GET",
 				params: {

@@ -31,7 +31,7 @@
       font-size: rem(5);
    }
 
-   @media (min-width: em($tablet)) {
+   @media (min-width: $breakpoint-md) {
       font-size: rem(20);
    }
 }

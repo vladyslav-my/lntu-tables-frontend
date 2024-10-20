@@ -18,37 +18,22 @@
 
 html,
 body {
-	min-width: $minWidth + px;
+	min-width: #{$minWidth}px;
 	height: 100%;
 }
 
 
 html {
    overflow-x:hidden;
-
-	// scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
-body {
-	color: $fontColor;
-	background: $layoutColor;
-
-	font-family: $fontFamily;
-	font-size: rem($fontSize);
-	line-height: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-
-	// text-rendering: optimizeLegibility;
-	text-size-adjust: 100%;
-}
 
 input,
 button,
 textarea {
 	color: inherit;
 
-	font-family: $fontFamily;
 	font-size: inherit;
 }
 

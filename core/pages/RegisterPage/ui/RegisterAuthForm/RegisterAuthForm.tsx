@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FC, memo, useCallback } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
-	AuthForm, AuthFormModifier, RegisterBody, userApi,
+	AuthForm, AuthFormModifier, IRegisterBody, userApi,
 } from "@core/entities/User";
 import { Input } from "@core/shared/components/Input";
 import cls from "./RegisterAuthForm.module.scss";
@@ -20,12 +20,12 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 
 	const {
 		handleSubmit, control, reset, formState: { errors },
-	} = useForm<RegisterBody>({
+	} = useForm<IRegisterBody>({
 		reValidateMode: "onBlur",
 		mode: "onBlur",
 	});
 
-	const onSubmit: SubmitHandler<RegisterBody> = useCallback((data) => {
+	const onSubmit: SubmitHandler<IRegisterBody> = useCallback((data) => {
 		register(data)
 			.then(() => {
 				router.push("/app/profile");

@@ -26,6 +26,13 @@
     },
     "plugins": [
       {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "allowUnknownClassnames": true,
+          "goToDefinition": true,
+        }
+      },
+      {
         "name": "next"
       }
     ]

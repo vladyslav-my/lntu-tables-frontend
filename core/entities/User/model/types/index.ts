@@ -2,12 +2,12 @@ export interface UserToken {
 	token: string;
 }
 
-export interface LoginBody {
+export interface ILoginBody {
 	email: string;
 	password: string;
 }
 
-export interface RegisterBody {
+export interface IRegisterBody {
 	name: string;
 	last_name: string;
 	phone_number: string;
@@ -16,7 +16,9 @@ export interface RegisterBody {
 	password_confirmation: string;
 }
 
-export interface User {
+export interface IUser {
 	id: number;
 	full_name: string;
+	email: string;
+	avatar: string | null;
 }

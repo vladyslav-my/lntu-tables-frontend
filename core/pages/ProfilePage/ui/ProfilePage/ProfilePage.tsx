@@ -1,10 +1,8 @@
 import clsx from "clsx";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { forwardRef } from "react";
 import { Page } from "@core/widgets/Page";
 import { $api } from "@core/shared/api/api";
-import { Button } from "@core/shared/components/Button";
 import cls from "./ProfilePage.module.scss";
 
 async function fetchUserData() {
@@ -38,6 +36,7 @@ export const ProfilePage = async () => {
 			title="Мої дані"
 		>
 			<pre>{JSON.stringify(data, null, 2)}</pre>
+
 		</Page>
 	);
 };

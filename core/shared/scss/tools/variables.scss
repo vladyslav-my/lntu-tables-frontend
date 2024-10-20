@@ -15,24 +15,21 @@ $transitionEase200: 0.2s ease;
 
 $zIndexOverlay: 400;
 $zIndexDrawer: 500;
+$zIndexAvatarPopover: 600;
 $zIndexButtons: 600;
 $zIndexModal: 700;
 $zIndexSelect: 800;
 $zIndexCalendar: 800;
-
-//** Fonts by default:
-$fontFamily: "Rubik"; //? name
-$fontSize: 16; //? size
-$fontColor: $purpleColor500; //? color
 
 $minWidth: 320; //? min width of layout
 $containerPadding: 30; //? padding for container
 $maxWidthContainer: 1400; //? width container
 $authWidthContainer: 660; //? width container
 
-
 //** Break-points:
-$pc: $containerPadding * 2 + $maxWidthContainer;
-$tablet: 991.98;
-$mobile: 767.98;
-$smallMobile: 479.98;
+$breakpoint-container: $containerPadding * 2 + $maxWidthContainer;
+$breakpoint-xs: em(480);
+$breakpoint-sm: em(768);
+$breakpoint-md: em(992);
+$breakpoint-lg: em(1200);
+$breakpoint-xl: em(1440);

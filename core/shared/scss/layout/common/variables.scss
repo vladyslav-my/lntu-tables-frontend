@@ -1,7 +1,7 @@
 :root {
    --container-padding: #{rem($containerPadding)};
 
-   @media (max-width: em($mobile)) {
+   @media (max-width: $breakpoint-sm) {
       --container-padding: #{rem(math.div($containerPadding, 2))};
    }
 }
