@@ -1,5 +1,6 @@
-import "@core/shared/scss/layout/index.scss";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+import "@core/shared/scss/layout/index.scss";
 
 import { ColorSchemeScript } from "@mantine/core";
 import { Metadata } from "next";

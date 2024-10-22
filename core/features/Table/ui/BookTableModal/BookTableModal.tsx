@@ -1,50 +1,124 @@
 "use client";
 
+import { Modal } from "@mantine/core";
 import clsx from "clsx";
 import {
-	Dispatch, FC, SetStateAction, useEffect,
-	useState,
+	FC,
+	useEffect,
 } from "react";
+import {
+	Controller, useForm,
+} from "react-hook-form";
+import { bookedTableApi, IBookedTableBody } from "@core/entities/BookedTable";
 import { Table } from "@core/entities/Table";
-import { userApi } from "@core/entities/User";
 import { Button } from "@core/shared/components/Button";
-import { Modal } from "@core/shared/components/Modal";
-import { Select, UserSelect } from "@core/shared/components/Selects";
+import { formatDate } from "../../lib";
+import { FilledAvailableTimeSelect } from "../FilledAvailableTimeSelect/FilledAvailableTimeSelect";
+import { FilledDatePickerInput } from "../FilledDatePickerInput/FilledDatePickerInput";
+import { FilledDurationSelect } from "../FilledDurationSelect/FilledDurationSelect";
+import { FilledUserSelect } from "../FilledUserSelect/FilledUserSelect";
 import cls from "./BookTableModal.module.scss";
 
 interface BookTableModalProps {
 	className?: string;
 	table: Table;
-	setIsOpen: Dispatch<SetStateAction<boolean>>;
-	isOpen: boolean;
+	opened: boolean;
+	close: () => void;
+	styles: any;
 }
 
 export const BookTableModal: FC<BookTableModalProps> = ({
-	className, table, isOpen, setIsOpen,
+	className, table, opened, close, styles, ...otherProps
 }) => {
-	const [search, setSearch] = useState();
-	const { data: usersData = [], error, isLoading } = userApi.useGetUsersQuery({ search });
+	const [saveBookedTable, { isLoading, error }] = bookedTableApi.useSaveBookedTableMutation();
 
-	console.log(usersData);
+	const {
+		handleSubmit, control, reset, formState: { errors }, watch, setValue,
+	} = useForm<IBookedTableBody>({
+		reValidateMode: "onBlur",
+		mode: "onBlur",
+		defaultValues: {
+			table_id: table.id,
+			date_picker: formatDate(new Date()),
+		},
+	});
+
+	const datePicker = watch("date_picker");
 
 	useEffect(() => {
+		if (datePicker) {
+			setValue("time_picker", null);
+		}
+	}, [datePicker, setValue]);
 
-	}, [search]);
+	const onSubmit = (data: IBookedTableBody) => {
+		console.log(data);
+		// saveBookedTable(data);
+	};
 
 	return (
 		<Modal
+			opened={opened}
+			onClose={close}
+			centered
 			className={clsx(cls.BookTableModal, [className])}
-			setIsOpen={setIsOpen}
-			isOpen={isOpen}
+			transitionProps={{ duration: 0 }}
+			style={styles}
+			{...otherProps}
 		>
 			<h3 className={cls.BookTableModal__title}>Бронювання столику</h3>
 			<p className={cls.BookTableModal__tableNumber}>Столик {table.number}</p>
-			<UserSelect
-				className={cls.BookTableModal__userSelect}
-				data={usersData}
-			/>
-			<Select placeholder="Оберіть тривалість" options={[{ id: 1, slug: "1 час" }, { id: 2, slug: "2 часа" }, { id: 3, slug: "3 часа" }]} />
-			<Button>Забронювати</Button>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Controller
+					name="date_picker"
+					control={control}
+					rules={{
+					}}
+					render={({ field }) => (
+						<FilledDatePickerInput
+							{...field}
+						/>
+					)}
+				/>
+				<Controller
+					name="time_picker"
+					control={control}
+					rules={{
+					}}
+					render={({ field }) => (
+						<FilledAvailableTimeSelect
+							{...field}
+							ownProps={{ tableId: table.id, date_picker: datePicker }}
+						/>
+					)}
+				/>
+
+				<Controller
+					name="duration"
+					control={control}
+					rules={{
+					}}
+					render={({ field }) => (
+						<FilledDurationSelect
+							{...field}
+						/>
+					)}
+				/>
+
+				<Controller
+					name="guest_id"
+					control={control}
+					rules={{
+					}}
+					render={({ field }) => (
+						<FilledUserSelect
+							{...field}
+						/>
+					)}
+				/>
+
+				<Button type="submit" isLoading={isLoading}>Забронювати</Button>
+			</form>
 		</Modal>
 	);
 };

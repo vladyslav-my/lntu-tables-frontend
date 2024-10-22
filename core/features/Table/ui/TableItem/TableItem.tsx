@@ -1,7 +1,9 @@
 "use client";
 
+import { Transition } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import clsx from "clsx";
-import { FC, useCallback, useState } from "react";
+import { FC } from "react";
 import { TableItem as EntityTableItem, Table } from "@core/entities/Table";
 import { BookTableModal } from "../BookTableModal/BookTableModal";
 import cls from "./TableItem.module.scss";
@@ -12,24 +14,28 @@ interface TableItemProps {
 }
 
 export const TableItem: FC<TableItemProps> = ({ className, table }) => {
-	const [isOpenModal, setIsOpenModal] = useState(false);
-
-	const onClick = useCallback(() => {
-		setIsOpenModal(true);
-	}, []);
+	const [opened, { open, close }] = useDisclosure(false);
 
 	return (
 		<>
-			{isOpenModal && (
-				<BookTableModal
-					isOpen={isOpenModal}
-					setIsOpen={setIsOpenModal}
-					table={table}
-				/>
-			)}
+			<Transition
+				mounted={opened}
+				transition="fade"
+				duration={400}
+				timingFunction="ease"
+			>
+				{(styles) => (
+					<BookTableModal
+						opened={opened}
+						close={close}
+						table={table}
+						styles={styles}
+					/>
+				)}
+			</Transition>
 			<EntityTableItem
 				className={clsx(cls.TableItem, {}, [className])}
-				onClick={onClick}
+				onClick={open}
 				number={table.number}
 			/>
 		</>

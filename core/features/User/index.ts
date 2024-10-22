@@ -1,5 +1,5 @@
 export { LogoutButton } from "./ui/LogoutButton/LogoutButton";
-export { UserDropDown } from "./ui/UserDropDown/UserDropDown";
+export { UserMenu } from "./ui/UserMenu/UserMenu";
 
 export {
 	featureUserSlice,

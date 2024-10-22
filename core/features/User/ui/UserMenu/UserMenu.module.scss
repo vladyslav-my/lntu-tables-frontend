@@ -1,0 +1,21 @@
+.UserMenu {
+   $p: &;
+   &__item {
+      &:hover {
+         #{$p} {
+            &__arrowIcon {
+               animation: arrowKeyframes 0.5s linear infinite alternate;
+            }
+         }
+      }
+   }
+}
+
+@keyframes arrowKeyframes {
+   0% {
+      transform: translateX(0);
+   }
+   100% {
+      transform: translateX(rem(2));
+   }
+}
