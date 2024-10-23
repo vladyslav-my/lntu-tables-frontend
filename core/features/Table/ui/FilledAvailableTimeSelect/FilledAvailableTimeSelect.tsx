@@ -11,8 +11,10 @@ interface FilledAvailableTimeSelectProps extends ComponentProps<typeof Select> {
 	}
 }
 
-export const FilledAvailableTimeSelect: FC<FilledAvailableTimeSelectProps> = ({ className, ownProps, ...otherProps }) => {
-	const { data, refetch, error } = bookedTableApi.useGetAvailableTimeQuery({
+export const FilledAvailableTimeSelect: FC<FilledAvailableTimeSelectProps> = ({
+	className, ownProps, error, ...otherProps
+}) => {
+	const { data, error: fetchError } = bookedTableApi.useGetAvailableTimeQuery({
 		tableId: ownProps.tableId,
 		date_picker: ownProps.date_picker,
 	}, {
@@ -21,7 +23,7 @@ export const FilledAvailableTimeSelect: FC<FilledAvailableTimeSelectProps> = ({ 
 	});
 
 	const checkErrors = useCallback(() => {
-		if (error) {
+		if (fetchError) {
 			return "Сталася непередбачувана помилка";
 		}
 
@@ -29,8 +31,8 @@ export const FilledAvailableTimeSelect: FC<FilledAvailableTimeSelectProps> = ({ 
 			return true;
 		}
 
-		return false;
-	}, [data?.length, error]);
+		return error;
+	}, [data?.length, error, fetchError]);
 
 	return (
 		<Select
@@ -41,7 +43,7 @@ export const FilledAvailableTimeSelect: FC<FilledAvailableTimeSelectProps> = ({ 
 			placeholder={data?.length ? "Виберіть доступний час" : "Немає доступних годин"}
 			disabled={!data?.length}
 			error={checkErrors()}
-			data={!error ? data : []}
+			data={data}
 			{...otherProps}
 		/>
 	);

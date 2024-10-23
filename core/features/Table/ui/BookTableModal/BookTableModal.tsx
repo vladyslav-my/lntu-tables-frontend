@@ -1,17 +1,13 @@
 "use client";
 
-import { Modal } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { IconCheckbox } from "@tabler/icons-react";
 import clsx from "clsx";
-import {
-	FC,
-	useEffect,
-} from "react";
-import {
-	Controller, useForm,
-} from "react-hook-form";
+import { FC, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { bookedTableApi, IBookedTableBody } from "@core/entities/BookedTable";
 import { Table } from "@core/entities/Table";
-import { Button } from "@core/shared/components/Button";
 import { formatDate } from "../../lib";
 import { FilledAvailableTimeSelect } from "../FilledAvailableTimeSelect/FilledAvailableTimeSelect";
 import { FilledDatePickerInput } from "../FilledDatePickerInput/FilledDatePickerInput";
@@ -35,8 +31,8 @@ export const BookTableModal: FC<BookTableModalProps> = ({
 	const {
 		handleSubmit, control, reset, formState: { errors }, watch, setValue,
 	} = useForm<IBookedTableBody>({
-		reValidateMode: "onBlur",
-		mode: "onBlur",
+		reValidateMode: "onSubmit",
+		mode: "onSubmit",
 		defaultValues: {
 			table_id: table.id,
 			date_picker: formatDate(new Date()),
@@ -52,8 +48,14 @@ export const BookTableModal: FC<BookTableModalProps> = ({
 	}, [datePicker, setValue]);
 
 	const onSubmit = (data: IBookedTableBody) => {
-		console.log(data);
-		// saveBookedTable(data);
+		saveBookedTable(data).then(() => {
+			close();
+			notifications.show({
+				title: "Столик успішно заброньовано",
+				message: "Очікуйте на підтвердження бронювання",
+				icon: <IconCheckbox size={64} />,
+			});
+		});
 	};
 
 	return (
@@ -62,21 +64,23 @@ export const BookTableModal: FC<BookTableModalProps> = ({
 			onClose={close}
 			centered
 			className={clsx(cls.BookTableModal, [className])}
-			transitionProps={{ duration: 0 }}
+			transitionProps={{ transition: "fade", duration: 400, timingFunction: "ease" }}
 			style={styles}
 			{...otherProps}
 		>
-			<h3 className={cls.BookTableModal__title}>Бронювання столику</h3>
+			<h3 className={cls.BookTableModal__title}>Бронювання столика</h3>
 			<p className={cls.BookTableModal__tableNumber}>Столик {table.number}</p>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Controller
 					name="date_picker"
 					control={control}
 					rules={{
+						required: "Дата є обов'язковою",
 					}}
 					render={({ field }) => (
 						<FilledDatePickerInput
 							{...field}
+							error={errors.date_picker?.message}
 						/>
 					)}
 				/>
@@ -84,10 +88,12 @@ export const BookTableModal: FC<BookTableModalProps> = ({
 					name="time_picker"
 					control={control}
 					rules={{
+						required: "Час є обов'язковим",
 					}}
 					render={({ field }) => (
 						<FilledAvailableTimeSelect
 							{...field}
+							error={errors.time_picker?.message}
 							ownProps={{ tableId: table.id, date_picker: datePicker }}
 						/>
 					)}
@@ -97,10 +103,12 @@ export const BookTableModal: FC<BookTableModalProps> = ({
 					name="duration"
 					control={control}
 					rules={{
+						required: "Тривалість є обов'язковою",
 					}}
 					render={({ field }) => (
 						<FilledDurationSelect
 							{...field}
+							error={errors.duration?.message}
 						/>
 					)}
 				/>
@@ -109,15 +117,17 @@ export const BookTableModal: FC<BookTableModalProps> = ({
 					name="guest_id"
 					control={control}
 					rules={{
+						required: "Користувач є обов'язковим",
 					}}
 					render={({ field }) => (
 						<FilledUserSelect
 							{...field}
+							error={errors.guest_id?.message}
 						/>
 					)}
 				/>
 
-				<Button type="submit" isLoading={isLoading}>Забронювати</Button>
+				<Button type="submit" loading={isLoading}>Забронювати</Button>
 			</form>
 		</Modal>
 	);
