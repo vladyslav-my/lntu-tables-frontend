@@ -8,6 +8,7 @@ import clsx from "clsx";
 import {
 	ComponentProps, FC, memo, useCallback, useState,
 } from "react";
+import { HoverAvatar } from "@core/shared/components/common";
 import cls from "./UserSelect.module.scss";
 
 interface UserSelectProps extends Omit<ComponentProps<typeof Select>, "data"> {
@@ -26,19 +27,6 @@ const iconProps = {
 	color: "currentColor",
 	opacity: 0.6,
 	size: 18,
-};
-
-const HoverAvatar = ({ src }: { src?: string | null }) => {
-	return (
-		<HoverCard shadow="md" withArrow openDelay={200} closeDelay={200}>
-			<HoverCard.Target>
-				<Avatar size="sm" src={src} radius="xl" />
-			</HoverCard.Target>
-			<HoverCard.Dropdown>
-				<Avatar size="xl" src={src} />
-			</HoverCard.Dropdown>
-		</HoverCard>
-	);
 };
 
 const renderSelectOption = ({ option, checked }: any) => (

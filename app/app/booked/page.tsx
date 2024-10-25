@@ -1,5 +1,9 @@
 import { BookedPage } from "@core/pages/BookedPage";
 
-export default function Booked() {
-	return <BookedPage />;
+interface BookedProps {
+	searchParams: { tab: "my" | "his" | "current" };
+}
+
+export default function Booked(props: BookedProps) {
+	return <BookedPage {...props} />;
 }

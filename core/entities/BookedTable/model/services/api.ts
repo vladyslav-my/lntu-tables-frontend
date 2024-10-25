@@ -1,6 +1,10 @@
-// import { fetchWithAuth } from "@core/shared/api/fetchWithAuth";
-// import { Table } from "../types";
+import { fetchWithAuth } from "@core/shared/api/fetchWithAuth";
 
-// export const getTables = async () => {
-// 	return fetchWithAuth<Table[]>("api/tables", { method: "GET" });
-// };
+export const getBookedTables = async ({ tab }: { tab?: "my" | "his" | "current" }) => {
+	return fetchWithAuth<any[]>("api/booked-tables", {
+		method: "GET",
+		params: {
+			tab,
+		},
+	});
+};
