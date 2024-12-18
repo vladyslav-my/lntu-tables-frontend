@@ -1,9 +1,7 @@
-import { Loader } from "@mantine/core";
 import clsx from "clsx";
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import { Page } from "@core/widgets/Page";
-import { CenteredLoader } from "@core/shared/components/CenteredLoader";
-import { Content } from "../Content/Content";
+import { BookedTables } from "../BookedTables/BookedTables";
 import { TabsController } from "../TabsController/TabsController";
 import cls from "./BookedPage.module.scss";
 
@@ -19,9 +17,7 @@ export const BookedPage: FC<BookedPageProps> = async ({ searchParams }) => {
 			fixedContent={<TabsController initialTab={searchParams.tab} />}
 		>
 
-			<Suspense key={searchParams.tab} fallback={<CenteredLoader />}>
-				<Content searchParams={searchParams} />
-			</Suspense>
+			<BookedTables searchParams={searchParams} />
 		</Page>
 	);
 };

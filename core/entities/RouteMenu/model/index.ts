@@ -8,7 +8,7 @@ export const routesMenuModal = [
 		name: "Карта залу",
 	},
 	{
-		href: "/app/booked",
+		href: "/app/booked?tab=current",
 		name: "Мої бронювання",
 	},
 ];

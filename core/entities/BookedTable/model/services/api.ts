@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { fetchWithAuth } from "@core/shared/api/fetchWithAuth";
 
 export const getBookedTables = async ({ tab }: { tab?: "my" | "his" | "current" }) => {
@@ -6,5 +7,6 @@ export const getBookedTables = async ({ tab }: { tab?: "my" | "his" | "current" 
 		params: {
 			tab,
 		},
+		tags: ["booked-tables"],
 	});
 };

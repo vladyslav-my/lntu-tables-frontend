@@ -2,6 +2,7 @@
 
 import { Badge, Button } from "@mantine/core";
 import clsx from "clsx";
+import { revalidateTag } from "next/cache";
 import { useRouter } from "next/navigation";
 import { FC, useMemo } from "react";
 import TableIcon from "@core/shared/assets/table.svg";
@@ -19,30 +20,31 @@ export const DisplayActionButtons = ({ className, data }: { className?: string; 
 	const router = useRouter();
 	const [action, { isLoading, error }] = bookedTableApi.useUpdateStatusMutation();
 
-	if (data.status === Status.during || data.status === Status.pending) {
-		return (
-			<div className={clsx(cls.DisplayActionButtons, {}, [className])}>
-				<Button
-					variant="outline"
-					color="red"
-					loading={isLoading}
-					onClick={() => { action({ bookedTableId: data.id, action: "decline" }); router.refresh(); }}
-				>
-					{data.is_guest ? "Відхилити" : "Скасувати"}
-				</Button>
-				{data.is_guest && (
-					<Button
-						loading={isLoading}
-						onClick={() => { action({ bookedTableId: data.id, action: "accept" }); router.refresh(); }}
-					>
-						Прийняти
-					</Button>
-				)}
-			</div>
-		);
+	if (data.status === Status.rejected || data.status === Status.timeout) {
+		return null;
 	}
-
-	return null;
+	return (
+		<div className={clsx(cls.DisplayActionButtons, {}, [className])}>
+			<Button
+				variant="outline"
+				size="md"
+				color="red"
+				loading={isLoading}
+				onClick={() => { action({ bookedTableId: data.id, action: "decline" }); }}
+			>
+				{data.is_guest ? "Відхилити" : "Скасувати"}
+			</Button>
+			{data.is_guest && !(data.status === Status.accepted) && (
+				<Button
+					size="md"
+					loading={isLoading}
+					onClick={() => { action({ bookedTableId: data.id, action: "accept" }); }}
+				>
+					Прийняти
+				</Button>
+			)}
+		</div>
+	);
 };
 
 export const BookedTable: FC<BookedTableProps> = ({
@@ -51,17 +53,35 @@ export const BookedTable: FC<BookedTableProps> = ({
 	const status = useMemo(() => {
 		switch (data.status) {
 			case "pending":
-				return "Очікується";
+				return {
+					message: "Очікується",
+					color: "yellow",
+				};
 			case "accepted":
-				return "Прийнято";
+				return {
+					message: "Прийнято",
+					color: "green",
+				};
 			case "during":
-				return "Триває";
+				return {
+					message: "Триває",
+					color: "blue",
+				};
 			case "rejected":
-				return "Скасовано";
+				return {
+					message: "Відмінено",
+					color: "red",
+				};
 			case "timeout":
-				return "Завершено";
+				return {
+					message: "Завершено",
+					color: "gray",
+				};
 			default:
-				return "Очікується";
+				return {
+					message: "Очікується",
+					color: "yellow",
+				};
 		}
 	}, [data.status]);
 
@@ -88,7 +108,7 @@ export const BookedTable: FC<BookedTableProps> = ({
 						<span className={cls.User__fullName}>{data.guest.full_name}</span>
 					</div>
 				</div>
-				<Badge className={cls.BookedTable__badge}>{status}</Badge>
+				<Badge className={cls.BookedTable__badge} size="xl" variant="outline" color={status.color}>{status.message}</Badge>
 				<DisplayActionButtons className={cls.BookedTable__actions} data={data} />
 			</div>
 		</li>

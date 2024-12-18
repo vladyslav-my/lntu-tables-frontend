@@ -26,7 +26,6 @@ export const Page: FC<PageProps> = memo(({
 				)}
 				{fixedContent}
 			</div>
-
 			<div className={cls.Page__content} id="scrollable-content">
 				{children}
 			</div>

@@ -1,31 +1,31 @@
 .BookedTable {
    display: grid;
-   
    grid-template-columns: auto 1fr;
 
-   // justify-content: center;
-
-   padding: rem(50);
+   padding: rem(40);
 
    border: rem(1) solid rgba(63, 64, 155, 0.57);
    border-radius: rem(20);
    gap: rem(20);
 
    font-size: rem(20);
-
+      
 
    &__users {
       display: grid;
 
       align-items: center;
 
-      max-width: rem(400);
-      grid-template-columns: repeat(2, auto);
+      width: min(100%, rem(450));
+      grid-template-columns: repeat(2, 1fr);
       gap: rem(10) rem(20);
    }
 
    &__icon {
       width: rem(200);
+      @media (max-width: $breakpoint-lg) and (min-width: $breakpoint-md) {
+         width: rem(150);
+      }
    }
 
    &__box {
@@ -41,7 +41,7 @@
          display: flex;
          align-items: center;
          flex-direction: column;
-         gap: rem(10);
+         gap: rem(20);
       }
    }
 
@@ -52,7 +52,11 @@
       display: flex;
       justify-content: space-between;
 
-      max-width: rem(450);
+      width: min(100%, rem(500));
+      @media (max-width: $breakpoint-sm) {
+         align-items: center;
+         flex-direction: column;
+      }
    }
 
    &__info {
@@ -60,6 +64,10 @@
       align-items: center;
       flex-direction: column;
       gap: rem(20);
+   }
+
+   &__badge {
+      align-self: end;
    }
 
    &__dateStart {
@@ -73,6 +81,15 @@
    &__table {
 
    }
+
+   @media (max-width: $breakpoint-sm) {
+      grid-template-columns: 1fr;
+   }
+
+
+   @media (max-width: $breakpoint-lg) and (min-width: $breakpoint-md) {
+      padding: rem(20);
+   }
 }
 
 .User {
@@ -84,8 +101,7 @@
 
    }
 
-   &__name {
-
+   &__fullName {
    }
 }
 

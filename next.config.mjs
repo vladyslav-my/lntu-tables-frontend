@@ -6,6 +6,10 @@ const nextConfig = {
 	publicRuntimeConfig: {
 		APP_URL: process.env.APP_URL,
 	},
+	experimental: {
+		serverActions: true, // Enables server actions if you're using them
+		isrFlushToDisk: true, // For ISR with tags
+	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.(".svg"));
 
