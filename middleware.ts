@@ -17,6 +17,10 @@ export async function middleware(req: NextRequest) {
 
 	const { pathname } = req.nextUrl;
 
+	if (isValidToken && pathname === "/") {
+		return NextResponse.redirect(new URL(CALLBACK_ROUTE, req.url));
+	}
+
 	if (isValidToken && (pathname.includes(AUTH_ROUTES.login) || pathname.includes(AUTH_ROUTES.register))) {
 		return NextResponse.redirect(new URL(CALLBACK_ROUTE, req.url));
 	}

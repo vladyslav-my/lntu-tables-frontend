@@ -1,9 +1,11 @@
+import { Button } from "@mantine/core";
 import clsx from "clsx";
+import Link from "next/link";
 import {
 	FC, ReactNode, SyntheticEvent, memo, useMemo,
 } from "react";
 import LntuLogoIcon from "@core/shared/assets/lntu-logo.svg";
-import { Button, LinkButton } from "@core/shared/components/Button";
+// import { Button, LinkButton } from "@core/shared/components/Button";
 import cls from "./AuthForm.module.scss";
 
 interface AuthFormProps {
@@ -57,18 +59,19 @@ export const AuthForm: FC<AuthFormProps> = memo(({
 			</div>
 			<div className={cls.AuthForm__buttons}>
 				<Button
-					isLoading={isLoading}
+					loading={isLoading}
 					type="submit"
-					Icon={LntuLogoIcon}
+					rightSection={LntuLogoIcon}
 					className={cls.AuthForm__submit}
 				>
 					{authType.submitName}
 				</Button>
-				<LinkButton
+				<Button
+					component={Link}
 					href={authType.link.to}
 				>
 					{authType.link.name}
-				</LinkButton>
+				</Button>
 			</div>
 		</form>
 	);

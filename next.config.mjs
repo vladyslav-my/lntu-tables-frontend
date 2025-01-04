@@ -31,6 +31,7 @@ const nextConfig = {
 
 		return config;
 	},
+
 	reactStrictMode: true,
 	sassOptions: {
 		prependData: readFileSync(path.resolve("core/shared/scss/tools/index.scss"), {

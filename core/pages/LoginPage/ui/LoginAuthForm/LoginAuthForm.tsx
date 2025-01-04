@@ -1,5 +1,6 @@
 "use client";
 
+import { Input, TextInput } from "@mantine/core";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import {
@@ -9,7 +10,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
 	AuthForm, AuthFormModifier, IRegisterBody, userApi,
 } from "@core/entities/User";
-import { Input } from "@core/shared/components/Input";
 import cls from "./LoginAuthForm.module.scss";
 
 interface LoginAuthFormProps {
@@ -63,9 +63,9 @@ export const LoginAuthForm: FC<LoginAuthFormProps> = memo(({ className }) => {
 					},
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Email"
-						withValidation
+						size="md"
 						error={errors.email?.message}
 						{...field}
 					/>
@@ -80,10 +80,10 @@ export const LoginAuthForm: FC<LoginAuthFormProps> = memo(({ className }) => {
 					maxLength: { value: 100, message: "Пароль повинен містити максимум 100 символів" },
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Пароль"
+						size="md"
 						type="password"
-						withValidation
 						error={errors.password?.message}
 						{...field}
 					/>

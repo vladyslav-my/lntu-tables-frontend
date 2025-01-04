@@ -1,13 +1,15 @@
 "use client";
 
+import { Input, TextInput } from "@mantine/core";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { FC, memo, useCallback } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { IMaskInput } from "react-imask";
 import {
 	AuthForm, AuthFormModifier, IRegisterBody, userApi,
 } from "@core/entities/User";
-import { Input } from "@core/shared/components/Input";
+// import { Input } from "@core/shared/components/Input";
 import cls from "./RegisterAuthForm.module.scss";
 
 interface RegisterAuthFormProps {
@@ -51,10 +53,10 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 					maxLength: { value: 30, message: "Ім’я повинно містити максимум 30 символів" },
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Ім’я"
-						withValidation
 						error={errors.name?.message}
+						size="md"
 						{...field}
 					/>
 				)}
@@ -68,10 +70,10 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 					maxLength: { value: 30, message: "Прізвище повинно містити максимум 30 символів" },
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Прізвище"
-						withValidation
 						error={errors.last_name?.message}
+						size="md"
 						{...field}
 					/>
 				)}
@@ -87,10 +89,10 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 					},
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Email"
-						withValidation
 						error={errors.email?.message}
+						size="md"
 						{...field}
 					/>
 				)}
@@ -101,15 +103,18 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 				rules={{
 					required: "Номер телефону є обов’язковим",
 					pattern: {
-						value: /^[0-9]{10}$/,
+						value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
 						message: "Невірний формат номеру телефону",
 					},
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
+						component={IMaskInput}
 						placeholder="Номер телефону"
-						withValidation
 						error={errors.phone_number?.message}
+						// @ts-ignore
+						mask="+38 (000) 000-00-00"
+						size="md"
 						{...field}
 					/>
 				)}
@@ -123,11 +128,11 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 					maxLength: { value: 100, message: "Пароль повинен містити максимум 100 символів" },
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Пароль"
 						type="password"
-						withValidation
 						error={errors.password?.message}
+						size="md"
 						{...field}
 					/>
 				)}
@@ -140,11 +145,11 @@ export const RegisterAuthForm: FC<RegisterAuthFormProps> = memo(({ className }) 
 					validate: (value) => value === control._formValues.password || "Паролі не співпадають",
 				}}
 				render={({ field }) => (
-					<Input
+					<TextInput
 						placeholder="Підтвердження паролю"
 						type="password"
-						withValidation
 						error={errors.password_confirmation?.message}
+						size="md"
 						{...field}
 					/>
 				)}
